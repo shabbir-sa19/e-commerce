@@ -24,8 +24,8 @@ export default async function ProductsPage() {
         <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {products.map((product, index) => (
             <article key={product.slug} className="group min-w-0">
-              <Link href={`/products/${product.slug}`} className="block">
-                <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-muted">
+              <Link href={`/${product.category}/${product.slug}`} className="block">
+                <div className="relative aspect-4/5 overflow-hidden rounded-2xl bg-muted">
                   <Image
                     src={product.image}
                     alt={product.name}

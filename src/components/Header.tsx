@@ -7,6 +7,7 @@ import { LogIn, Menu } from 'lucide-react'
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { Show, SignInButton, UserButton } from '@clerk/nextjs'
+import { CartButton } from './CartButton'
 
 type HeaderProp = {
   pathname: string | null,
@@ -16,7 +17,8 @@ type HeaderProp = {
 const navlinks = [
   { label: "Products", href: "/products" },
   { label: "Debug", href: "/debug" },
-  { label: "Login", href: "/sign-in" }
+  { label: "Login", href: "/sign-in" },
+  { label: "Cart", href: "/cart" }
 ];
 
 const Header = () => {
@@ -29,7 +31,7 @@ const Header = () => {
         {/** Logo */}
         <AppName />
         {/** Menu Button */}
-        <Button className={`flex md:hidden`} variant={'outline'} onClick={() => { setIsMenuOpen(!isMenuOpen) }}>
+        <Button className={`flex md:hidden focus:bg-primary focus:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring/50`} variant={'outline'} onClick={() => { setIsMenuOpen(!isMenuOpen) }}>
           <Menu className="" />
         </Button>
         {/** Navigation Menu */}
@@ -39,17 +41,18 @@ const Header = () => {
           </div>
         </div>
         {/* Sign Up Button */}
-        <div className="hidden md:flex gap-2 items-center">
+        <div className="hidden md:flex gap-4 items-center">
           <ThemeButton />
           <Show when="signed-out">
             <SignInButton mode="redirect">
-              <Button variant="default" className={`flex px-4 py-2 focus:bg-accent focus:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring/50`}>
+              <Button variant="default" size={"lg"} className={`flex px-4 py-2 focus:bg-primary focus:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring/50`}>
                 <LogIn />
                 <span className="">Log In</span>
               </Button>
             </SignInButton>
           </Show>
           <Show when="signed-in">
+            <CartButton />
             <UserButton />
           </Show>
         </div>

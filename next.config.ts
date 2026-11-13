@@ -9,7 +9,6 @@ const nextConfig: NextConfig = {
         hostname: "images.unsplash.com",
         port: "",
         pathname: "/photo-*",
-        search: "?auto=format&fit=crop&w=1200&q=85",
       },
     ],
   },
