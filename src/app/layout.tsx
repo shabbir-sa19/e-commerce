@@ -29,9 +29,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <Suspense fallback={<div className="h-14" />}>
             <Header />
           </Suspense>
-          <div className="flex grow w-full">
-            {children}
-          </div>
+          <Suspense fallback={<div className="" />}>
+            <div className="flex grow w-full">
+              {children}
+            </div>
+          </Suspense>
           <Footer />
         </Providers>
       </body>

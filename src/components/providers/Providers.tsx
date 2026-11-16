@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { Suspense } from 'react'
 import { ThemeProvider } from './ThemeProvider'
 import { ClerkProvider } from '@clerk/nextjs'
 import { shadcn } from '@clerk/ui/themes'
@@ -12,7 +12,9 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
         <ClerkProvider appearance={{ theme: shadcn }}>
           <QueryProvider>
-            {children}
+            <Suspense fallback={<div className="h-14" />}>
+              {children}
+            </Suspense>
           </QueryProvider>
         </ClerkProvider>
       </ThemeProvider>
