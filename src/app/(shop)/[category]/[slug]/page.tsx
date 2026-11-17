@@ -1,16 +1,32 @@
+"use client"
 import BreadCrumb from '@/components/BreadCrumb';
 import { Badge } from '@/components/ui/badge';
 import { AddToCart } from '@/components/AddToCart';
-import { getProductBySlug } from '@/lib/seeds';
 import { formatPrice } from '@/lib/utils';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Suspense } from 'react';
+import { type Product } from '@/types/types';
 
 type Props = { params: Promise<{ slug: string }> }
 
+const getProductBySlug = async (slug: string): Promise<Product | undefined> => {
+  let url = `http://localhost:3000/api/products/${slug}`;
+  let options = {
+    method: 'GET'
+  };
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    const err = await response.json()
+    console.log(err.error)
+    return undefined
+  }
+  const data: Product = await response.json()
+
+  return data
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;

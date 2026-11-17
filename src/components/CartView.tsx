@@ -7,6 +7,11 @@ import { Minus, Plus, ShoppingBag, Trash2 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { Button, buttonVariants } from "./ui/button"
+import { useEffect, useState } from "react"
+import { buttonVariants } from "./ui/button"
+import { useAuth, useSession, useUser } from "@clerk/nextjs"
+
+type Props = {}
 
 export default function CartView() {
   const dispatch = useAppDispatch()

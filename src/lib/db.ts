@@ -1,7 +1,7 @@
 import mongoose, { Connection } from 'mongoose'
 
-const URI = "mongodb://127.0.0.1:27017";
-const DBNAME = "test"
+const URI = "mongodb+srv://shabbirsa19_db_user:Dy9AvwPDWC8Ln0bY@cluster0.9jzacz0.mongodb.net";
+const DBNAME = "atelier"
 
 declare global {
   var globalForMongoose: {

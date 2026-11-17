@@ -14,6 +14,6 @@ const productSchema = new Schema({
   status: { type: String, enum: ["active", "draft"], default: "active", index: true },
 }, { timestamps: true });
 
-const Product = mongoose.models.Product || mongoose.model("Product", productSchema);
+const ProductModel = mongoose.models.Product || mongoose.model("Product", productSchema);
 
-export default Product;
+export default ProductModel;

@@ -48,9 +48,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               </main>
             }
           >
-            <StoreProvider>
-              <div className="flex grow w-full">{children}</div>
-            </StoreProvider>
+            <div className="flex grow w-full">{children}</div>
           </Suspense>
           <Footer />
         </Providers>
