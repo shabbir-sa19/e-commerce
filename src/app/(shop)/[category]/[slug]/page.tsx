@@ -6,22 +6,22 @@ import { notFound } from 'next/navigation';
 
 type Props = { params: Promise<{ slug: string }> }
 
-const getProductBySlug = async (slug: string): Promise<Product> => {
-  const s: Product = {
-    name: "",
-    slug: slug,
-    category: "" as unknown as Product['category'],
-    description: "",
-    image: "",
-    priceMinor: 0,
-    mrp: 0,
-    currency: "",
-    sku: "",
-    stock: 0,
-    featured: false,
+const getProductBySlug = async (slug: string): Promise<Product | undefined> => {
+  let url = `http://localhost:3000/api/products/${slug}`;
+  let options = {
+    method: 'GET'
+  };
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    const err = await response.json()
+    console.log(err.error)
+    return undefined
   }
-  return s
+  const data: Product = await response.json()
+
+  return data
 }
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const product = await getProductBySlug(slug);

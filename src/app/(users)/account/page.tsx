@@ -1,8 +1,8 @@
 "use client"
-import { Button } from '@/components/ui/button';
-type Props = {}
 
-export default function AccountPage({ }: Props) {
+import { UserProfile } from '@clerk/nextjs';
+
+export default function AccountPage() {
   const handler = async () => {
     try {
       const response = await fetch("http://localhost:3000/api/account", {
@@ -18,11 +18,10 @@ export default function AccountPage({ }: Props) {
     }
   }
   return (
-    <section>
-      <h1 className="">Update Profile</h1>
-      <Button onClick={handler}>
-        handle
-      </Button>
+    <section className="flex flex-col w-full items-center py-16 px-8">
+      <div className="">
+        <UserProfile />
+      </div>
     </section>
   )
 }

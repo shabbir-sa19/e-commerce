@@ -1,6 +1,6 @@
 import { auth, clerkClient, currentUser } from "@clerk/nextjs/server";
-import { z } from "zod";
 import { NextResponse, type NextRequest } from "next/server";
+import { z } from "zod";
 
 const profileSchema = z.object({
   firstName: z.string().trim().max(50).optional(),
@@ -10,17 +10,8 @@ const profileSchema = z.object({
   { message: "At least one profile field is required." },
 );
 
-function accountResponse(user: NonNullable<Awaited<ReturnType<typeof currentUser>>>) {
-  return {
-    id: user.id,
-    firstName: user.firstName,
-    lastName: user.lastName,
-    email: user.primaryEmailAddress?.emailAddress ?? null,
-    imageUrl: user.imageUrl,
-  };
-}
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     await auth.protect();
 

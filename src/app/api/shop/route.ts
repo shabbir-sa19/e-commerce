@@ -1,5 +1,5 @@
 import { connectToDatabase } from "@/lib/db";
-import Product from "@/models/Product";
+import ProductModel from "@/models/Product";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
     }
 
     const limit = Math.min(requestedLimit, 50);
-    const page = Math.min(requestedPage, 100_000);
+    const page = Math.min(requestedPage, 100);
     const filter: Record<string, unknown> = { status: "active" };
 
     if (category) {
@@ -38,13 +38,13 @@ export async function GET(request: NextRequest) {
     await connectToDatabase();
 
     const [products, total] = await Promise.all([
-      Product.find(filter)
+      ProductModel.find(filter)
         .sort({ featured: -1, createdAt: -1 })
         .skip((page - 1) * limit)
         .limit(limit)
         .lean()
         .exec(),
-      Product.countDocuments(filter).exec(),
+      ProductModel.countDocuments(filter).exec(),
     ]);
 
     return NextResponse.json({

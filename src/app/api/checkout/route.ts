@@ -3,8 +3,8 @@ import * as z from "zod";
 import { connectToDatabase } from "@/lib/db";
 import Cart from "@/models/Cart";
 import Order from "@/models/Order";
-import Product from "@/models/Product";
 import { NextResponse, type NextRequest } from "next/server";
+import ProductModel from "@/models/Product";
 
 const checkoutSchema = z.object({
   shippingAddress: z.object({
@@ -17,12 +17,11 @@ const checkoutSchema = z.object({
 }).strict();
 
 export async function POST(request: NextRequest) {
-  await auth.protect()
-
   const { userId, sessionId } = await auth();
   if (!userId) {
     return NextResponse.json({ error: "Authentication Required." }, { status: 401 });
   }
+  console.log(sessionId);
 
   const body = await request.json()
   const parsed = checkoutSchema.safeParse(body)
@@ -37,9 +36,9 @@ export async function POST(request: NextRequest) {
     }
 
     await connectToDatabase();
+
     const email = user.primaryEmailAddress?.emailAddress || "";
     const cart = await Cart.findOne({ userId }).lean().exec();
-    console.log(sessionId);
     if (!cart || cart.items.length === 0) {
       return NextResponse.json({ error: "Your cart is empty." }, { status: 409 });
     }
@@ -49,7 +48,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Cart contains duplicate products. Update the cart and try again." }, { status: 409 });
     }
 
-    const products = await Product.find({ slug: { $in: slugs }, status: "active" })
+    const products = await ProductModel.find({ slug: { $in: slugs }, status: "active" })
       .select("slug name sku priceMinor currency stock")
       .lean()
       .exec();

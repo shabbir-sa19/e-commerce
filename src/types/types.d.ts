@@ -5,7 +5,7 @@ export type ProductCategory = {
   name: string;
 }
 export type Product = {
-  id?: string | mongoose.Types.ObjectId;
+  _id?: string | mongoose.Types.ObjectId;
   name: string;
   slug: string;
   category: ProductCategory;
