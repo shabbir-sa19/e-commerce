@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Suspense } from "react";
 import "./globals.css";
 import Providers from "@/components/providers/Providers";
+import StoreProvider from "@/components/providers/StoreProvider";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -29,9 +30,28 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <Suspense fallback={<div className="h-14" />}>
             <Header />
           </Suspense>
-          <div className="flex grow w-full">
-            {children}
-          </div>
+          <Suspense
+            fallback={
+              <main className="flex grow w-full px-8 py-12" aria-busy="true">
+                <div className="mx-auto w-full max-w-7xl animate-pulse">
+                  <div className="mb-8 h-8 w-56 rounded bg-muted" />
+                  <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
+                    {Array.from({ length: 8 }, (_, index) => (
+                      <div key={index}>
+                        <div className="aspect-square rounded bg-muted" />
+                        <div className="mt-4 h-4 w-3/4 rounded bg-muted" />
+                        <div className="mt-2 h-4 w-1/3 rounded bg-muted" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </main>
+            }
+          >
+            <StoreProvider>
+              <div className="flex grow w-full">{children}</div>
+            </StoreProvider>
+          </Suspense>
           <Footer />
         </Providers>
       </body>

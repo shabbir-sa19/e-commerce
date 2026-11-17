@@ -8,7 +8,7 @@ export type Product = {
   id?: string | mongoose.Types.ObjectId;
   name: string;
   slug: string;
-  category: ProductCategory;
+  category: string;
   description: string;
   image: string;
   mrp: number;
@@ -27,6 +27,7 @@ export type CartItem = {
   priceMinor: number;
   currency: string;
   quantity: number;
+  stock?: number;
 };
 
 export type Customer = {
